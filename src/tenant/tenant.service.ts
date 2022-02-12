@@ -4,8 +4,6 @@ import { Tenant, TenantDocument } from './tenant.schema';
 import { Model, Schema, ObjectId } from 'mongoose';
 import { TenantAccess, TenantAccessDocument } from './tenant.access.schema';
 import { CreateTenantDto } from './dto/create-tenant.dto';
-import { v4 as uuidv4 } from 'uuid';
-import { randomPasswordGenerator } from '../common/utils';
 
 @Injectable()
 export class TenantService {
@@ -22,30 +20,37 @@ export class TenantService {
   }
 
   async createTenantAccess(tenantId: string): Promise<TenantAccess> {
-    const accessKey = uuidv4();
-    const accessSecret = randomPasswordGenerator(40);
-    const createdTenantAccess = await this.tenantAccessModel.create({
-      tenant: tenantId,
-      accessKey: accessKey,
-      accessSecret: accessSecret,
-    });
+    const createdTenantAccess = await this.tenantAccessModel.create(
+      new TenantAccess(tenantId),
+    );
     return createdTenantAccess;
   }
 
-  async validateTenantAccess(
-    apiKey: string,
-    apiSecret: string,
-  ): Promise<boolean> {
+  async getTenant(tenantId: string): Promise<Tenant> {
+    const tenant = await this.tenantModel
+      .findOne({
+        _id: tenantId,
+      })
+      .exec();
+    return tenant;
+  }
+
+  async validateTenantAccess(apiKey: string, apiSecret: string): Promise<any> {
     const tenantAccess = await this.tenantAccessModel
       .findOne({
         accessKey: apiKey,
         accessSecret: apiSecret,
       })
       .exec();
-    if (tenantAccess) {
-      return true;
+    if (tenantAccess && tenantAccess.isActive) {
+      return {
+        isValid: true,
+        tenantId: tenantAccess.tenant,
+      };
     } else {
-      return false;
+      return {
+        isValid: false,
+      };
     }
   }
 }
