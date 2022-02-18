@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Tenant, TenantSchema } from './tenant.schema';
-import { TenantAccess, TenantAccessSchema } from './tenant.access.schema';
+import { Tenant, TenantSchema } from './schemas/tenant.schema';
+import {
+  TenantAccess,
+  TenantAccessSchema,
+} from './schemas/tenant.access.schema';
 import { TenantController } from './tenant.controller';
 import { TenantService } from './tenant.service';
 

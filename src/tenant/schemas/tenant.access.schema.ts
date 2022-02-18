@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import { Tenant } from './tenant.schema';
 import { v4 as uuidv4 } from 'uuid';
-import { randomPasswordGenerator } from '../common/utils';
+import { randomPasswordGenerator } from '../../common/utils';
 
 export type TenantAccessDocument = TenantAccess & Document;
 
