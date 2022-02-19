@@ -19,7 +19,10 @@ export class RewardsLedger {
   userId: string;
 
   @Prop()
-  rewardValue: number;
+  totalRewardPoints: number;
+
+  @Prop()
+  currentRewardPoints: number;
 
   @Prop({
     type: String,
@@ -40,7 +43,8 @@ export class RewardsLedger {
   constructor(creditRewards: CreditRewardsDto, tenantId) {
     this.tenant = tenantId;
     this.userId = creditRewards.userId;
-    this.rewardValue = creditRewards.rewardValue;
+    this.totalRewardPoints = creditRewards.rewardValue;
+    this.currentRewardPoints = this.totalRewardPoints;
     this.type = 'credit';
     this.expiryDate = creditRewards.expiryDate;
     this.transactionMeta = creditRewards.transactionMeta;
