@@ -7,7 +7,7 @@ import {
 import { Model } from 'mongoose';
 import { UserRewardsService } from '../user-rewards/user-rewards.service';
 import { RedeemRewardDto } from './dto/redeem-reward.dto';
-import {DebitRewardDto} from "../user-rewards/dtos/debit-reward.dto";
+import { DebitRewardDto } from '../user-rewards/dtos/debit-reward.dto';
 
 @Injectable()
 export class RewardRedemptionService {
@@ -62,10 +62,12 @@ export class RewardRedemptionService {
     tenantId: string,
     redemptionId: string,
   ): Promise<boolean> {
-    const rewardRedemptionRule = await this.rewardRedemptionModel.findOne({
-      tenant: tenantId,
-      _id: redemptionId,
-    });
+    const rewardRedemptionRule = await this.rewardRedemptionModel
+      .findOne({
+        tenant: tenantId,
+        _id: redemptionId,
+      })
+      .exec();
     if (rewardRedemptionRule) {
       const userRewards =
         await this.userRewardsService.getUserCurrentRewardPoints(
@@ -78,6 +80,7 @@ export class RewardRedemptionService {
           userRewards,
         )
       ) {
+        console.debug(rewardRedemptionRule);
         const rewardValue = rewardRedemptionRule.redeemRewardValue(
           redeemRewardDto.transaction,
         );

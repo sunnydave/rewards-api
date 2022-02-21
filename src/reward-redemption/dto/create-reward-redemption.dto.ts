@@ -27,5 +27,8 @@ export class CreateRewardRedemptionDto {
   @IsNumber()
   maxDiscountValue: number;
 
+  @IsNumber()
+  requiredRewardPoints: number;
+
   tenant = '';
 }

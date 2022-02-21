@@ -13,6 +13,7 @@ export type RewardRedemptionDocument = RewardRedemption & Document;
 
 @Schema({
   timestamps: true,
+  discriminatorKey: 'discountType',
 })
 export class RewardRedemption {
   @Prop({

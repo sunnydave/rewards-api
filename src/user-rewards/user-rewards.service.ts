@@ -71,11 +71,12 @@ export class UserRewardsService {
         expiryDate: { $gt: todayDate },
       })
       .sort({
-        expiryDate: 1,
+        expiryDate: -1,
       })
       .exec();
 
     if (creditRewardsToBeRedeemed) {
+      console.debug(`Debiting rewards : ${debitRewardsDto.rewardValue}`);
       let debitAmount = debitRewardsDto.rewardValue;
       for (const creditReward of creditRewardsToBeRedeemed) {
         if (creditReward.currentRewardPoints > debitAmount) {
@@ -138,5 +139,27 @@ export class UserRewardsService {
     } else {
       return false;
     }
+  }
+
+  async getUserLedger(
+    tenantId: string,
+    userId: string,
+    page: number,
+    limit: number,
+  ): Promise<Array<RewardsLedger>> {
+    const ledger = await this.rewardsLedgeModel
+      .find(
+        {
+          tenant: tenantId,
+          userId: userId,
+        },
+        {},
+        {
+          page: Number(page),
+          limit: Number(limit),
+        },
+      )
+      .exec();
+    return ledger;
   }
 }

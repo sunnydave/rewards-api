@@ -1,8 +1,9 @@
 import { Tenant } from '../../tenant/schemas/tenant.schema';
 import { RewardRule } from '../../reward-configuration/schemas/reward-rule.schema';
-import { Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import { isNumber } from 'class-validator';
 
+@Schema()
 export class PercentDiscount {
   tenant: Tenant;
   active: boolean;
@@ -29,14 +30,14 @@ export class PercentDiscount {
 export const PercentDiscountSchema =
   SchemaFactory.createForClass(PercentDiscount);
 PercentDiscountSchema.methods.redeemRewardValue = function (transaction: any) {
-  if (transaction && transaction['measureForPercent']) {
-    const measureValue = transaction['measureForPercent'];
+  if (transaction && transaction[this.measureForPercent]) {
+    const measureValue = transaction[this.measureForPercent];
     if (isNumber(measureValue)) {
       const discountValue = measureValue * (this.percentDiscount / 100);
       if (discountValue > this.maxDiscountValue) {
         return this.maxDiscountValue;
       } else {
-        return this.discountValue;
+        return discountValue;
       }
     }
   }

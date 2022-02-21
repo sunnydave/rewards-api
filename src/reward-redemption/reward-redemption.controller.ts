@@ -20,7 +20,7 @@ export class RewardRedemptionController {
     private readonly rewardRedemptionService: RewardRedemptionService,
   ) {}
 
-  @Post()
+  @Post('createConfiguration')
   @UseGuards(ApiKeyGuard)
   async createRewardRedemption(
     @TenantId() tenantId: string,

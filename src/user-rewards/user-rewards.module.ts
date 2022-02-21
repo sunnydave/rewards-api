@@ -6,6 +6,7 @@ import {
   RewardsLedgerSchema,
 } from './schemas/rewards-ledger.schema';
 import { UserReward, UserRewardSchema} from "./schemas/user-reward.schema";
+import { UserRewardsController } from './user-rewards.controller';
 
 @Module({
   imports: [
@@ -16,5 +17,6 @@ import { UserReward, UserRewardSchema} from "./schemas/user-reward.schema";
   ],
   exports: [UserRewardsService],
   providers: [UserRewardsService],
+  controllers: [UserRewardsController],
 })
 export class UserRewardsModule {}
