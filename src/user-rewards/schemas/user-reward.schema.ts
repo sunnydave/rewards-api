@@ -22,6 +22,7 @@ export class UserReward {
   currentRewardValue: number;
 
   creditUserReward!: (creditAmount: number) => number;
+  debitUserReward!: (debitAmount: number) => number;
 
   constructor(creditRewardsDto: CreditRewardsDto, tenantId) {
     this.tenant = tenantId;
@@ -33,5 +34,10 @@ export class UserReward {
 export const UserRewardSchema = SchemaFactory.createForClass(UserReward);
 UserRewardSchema.methods.creditUserReward = function (creditAmount: number) {
   this.currentRewardValue += creditAmount;
+  return this.currentRewardValue;
+};
+
+UserRewardSchema.methods.debitUserReward = function (debitAmount: number) {
+  this.currentRewardValue -= debitAmount;
   return this.currentRewardValue;
 };

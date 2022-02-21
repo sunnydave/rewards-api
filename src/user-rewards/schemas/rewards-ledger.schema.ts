@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import { Tenant } from '../../tenant/schemas/tenant.schema';
 import { CreditRewardsDto } from '../dtos/credit-rewards.dto';
+import { DebitRewardDto } from '../dtos/debit-reward.dto';
 
 export type RewardsLedgerDocument = RewardsLedger & Document;
 
@@ -40,15 +41,19 @@ export class RewardsLedger {
   @Prop({ required: true, type: mongoose.Schema.Types.Mixed })
   userMeta: any;
 
-  constructor(creditRewards: CreditRewardsDto, tenantId) {
+  constructor(rewards: CreditRewardsDto | DebitRewardDto, tenantId) {
     this.tenant = tenantId;
-    this.userId = creditRewards.userId;
-    this.totalRewardPoints = creditRewards.rewardValue;
+    this.userId = rewards.userId;
+    this.totalRewardPoints = rewards.rewardValue;
     this.currentRewardPoints = this.totalRewardPoints;
-    this.type = 'credit';
-    this.expiryDate = creditRewards.expiryDate;
-    this.transactionMeta = creditRewards.transactionMeta;
-    this.userMeta = creditRewards.userMeta;
+    this.transactionMeta = rewards.transactionMeta;
+    this.userMeta = rewards.userMeta;
+    if (rewards instanceof CreditRewardsDto) {
+      this.type = 'credit';
+      this.expiryDate = rewards.expiryDate;
+    } else if (rewards instanceof DebitRewardDto) {
+      this.type = 'debit';
+    }
   }
 }
 

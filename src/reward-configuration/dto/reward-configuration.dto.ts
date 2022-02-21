@@ -6,7 +6,7 @@ import {
   IsNumber,
   IsString,
 } from 'class-validator';
-import { RewardRule } from '../schemas/reward-rule.schema';
+import { RewardRuleDto } from '../../tenant/dto/reward-rule.dto';
 
 export class RewardConfigurationDto {
   @IsString()
@@ -18,7 +18,7 @@ export class RewardConfigurationDto {
   readonly ruleExpiry: Date;
 
   @IsArray()
-  readonly rules: Array<RewardRule>;
+  readonly rules: Array<RewardRuleDto>;
 
   @IsString()
   @IsNotEmpty()

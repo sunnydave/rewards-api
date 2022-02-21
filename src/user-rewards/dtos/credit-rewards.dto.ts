@@ -1,5 +1,5 @@
 import { IsDate, IsNumber, IsObject, IsString } from 'class-validator';
-import {ApplyRewardDto} from "../../reward-configuration/dto/apply-reward.dto";
+import { ApplyRewardDto } from '../../reward-configuration/dto/apply-reward.dto';
 
 export class CreditRewardsDto {
   @IsString()
