@@ -13,8 +13,10 @@ import { ApiKeyGuard } from '../auth/guards/apiKey.guard';
 import { TenantId } from '../auth/decorators/tenant.decorator';
 import { CreateRewardRedemptionDto } from './dto/create-reward-redemption.dto';
 import { RedeemRewardDto } from './dto/redeem-reward.dto';
+import {ApiOperation, ApiTags} from "@nestjs/swagger";
 
 @Controller('reward-redemption')
+@ApiTags('reward-redemption')
 export class RewardRedemptionController {
   constructor(
     private readonly rewardRedemptionService: RewardRedemptionService,
@@ -22,6 +24,9 @@ export class RewardRedemptionController {
 
   @Post('createConfiguration')
   @UseGuards(ApiKeyGuard)
+  @ApiOperation({
+    summary: 'Create reward redemption rule',
+  })
   async createRewardRedemption(
     @TenantId() tenantId: string,
     @Body() createRewardRedemptionDto: CreateRewardRedemptionDto,
@@ -45,6 +50,9 @@ export class RewardRedemptionController {
 
   @Get('allApplicableRules')
   @UseGuards(ApiKeyGuard)
+  @ApiOperation({
+    summary: 'Get all redemption rules applicable to the transaction',
+  })
   async getAllApplicableRules(
     @TenantId() tenantId: string,
     @Body() redeemRewardDto: RedeemRewardDto,
@@ -59,6 +67,9 @@ export class RewardRedemptionController {
 
   @Post('applyReward/:redemptionId')
   @UseGuards(ApiKeyGuard)
+  @ApiOperation({
+    summary: 'Redeem the reward for the transaction',
+  })
   async redeemRewards(
     @TenantId() tenantId: string,
     @Body() redeemRewardDto: RedeemRewardDto,

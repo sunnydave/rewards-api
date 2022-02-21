@@ -7,7 +7,7 @@ import {
 import { Model } from 'mongoose';
 import { UserRewardsService } from '../user-rewards/user-rewards.service';
 import { RedeemRewardDto } from './dto/redeem-reward.dto';
-import { DebitRewardDto } from '../user-rewards/dtos/debit-reward.dto';
+import { DebitRewardDto } from '../user-rewards/dto/debit-reward.dto';
 
 @Injectable()
 export class RewardRedemptionService {

@@ -6,7 +6,7 @@ import {
 } from './schemas/reward-configuration.schema';
 import { Model } from 'mongoose';
 import { ApplyRewardDto } from './dto/apply-reward.dto';
-import { CreditRewardsDto } from '../user-rewards/dtos/credit-rewards.dto';
+import { CreditRewardsDto } from '../user-rewards/dto/credit-rewards.dto';
 import { UserRewardsService } from '../user-rewards/user-rewards.service';
 
 @Injectable()

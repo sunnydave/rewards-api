@@ -12,8 +12,10 @@ import { TenantId } from '../auth/decorators/tenant.decorator';
 import { RewardConfigurationDto } from './dto/reward-configuration.dto';
 import { ApiKeyGuard } from '../auth/guards/apiKey.guard';
 import { ApplyRewardDto } from './dto/apply-reward.dto';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('reward-configuration')
+@ApiTags('reward-configuration')
 export class RewardConfigurationController {
   constructor(
     private readonly rewardConfigurationService: RewardConfigurationService,
@@ -21,6 +23,9 @@ export class RewardConfigurationController {
 
   @Post()
   @UseGuards(ApiKeyGuard)
+  @ApiOperation({ summary: 'Create Reward Configuration' })
+  @ApiResponse({ status: 400, description: 'Missing required properties' })
+  @ApiResponse({ status: 200, description: 'Created reward configuration' })
   async createRewardConfiguration(
     @TenantId() tenantId,
     @Body() createRewardConfigurationDto: RewardConfigurationDto,
@@ -44,6 +49,7 @@ export class RewardConfigurationController {
 
   @Get()
   @UseGuards(ApiKeyGuard)
+  @ApiOperation({ summary: 'All rewards for the tenant' })
   async getAllRewards(@TenantId() tenantId) {
     const rewards =
       await this.rewardConfigurationService.getAllRewardConfigurations(
@@ -54,6 +60,9 @@ export class RewardConfigurationController {
 
   @Post('/applyReward')
   @UseGuards(ApiKeyGuard)
+  @ApiOperation({
+    summary: 'Credit reward for the user based on the transaction',
+  })
   async applyRewardOnTransaction(
     @TenantId() tenantId,
     @Body() applyRewardDto: ApplyRewardDto,

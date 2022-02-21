@@ -1,7 +1,7 @@
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import { Tenant } from '../../tenant/schemas/tenant.schema';
-import {CreditRewardsDto} from "../dtos/credit-rewards.dto";
+import {CreditRewardsDto} from "../dto/credit-rewards.dto";
 
 export type UserRewardDocument = UserReward & Document;
 

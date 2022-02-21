@@ -2,13 +2,18 @@ import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { ApiKeyGuard } from '../auth/guards/apiKey.guard';
 import { TenantId } from '../auth/decorators/tenant.decorator';
 import { UserRewardsService } from './user-rewards.service';
+import {ApiOperation, ApiTags} from '@nestjs/swagger';
 
 @Controller('user-rewards')
+@ApiTags('user-rewards')
 export class UserRewardsController {
   constructor(private readonly userRewardsService: UserRewardsService) {}
 
   @Get(':userId/currentRewardValue')
   @UseGuards(ApiKeyGuard)
+  @ApiOperation({
+    summary: 'Get current active reward value for the user',
+  })
   async getCurrentRewardValue(
     @TenantId() tenantId: string,
     @Param('userId') userId: string,
@@ -21,6 +26,9 @@ export class UserRewardsController {
 
   @Get(':userId/userLedger')
   @UseGuards(ApiKeyGuard)
+  @ApiOperation({
+    summary: 'Get user reward ledger',
+  })
   async getUserLedger(
     @TenantId() tenantId: string,
     @Param('userId') userId: string,

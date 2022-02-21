@@ -5,9 +5,9 @@ import {
   RewardsLedgerDocument,
 } from './schemas/rewards-ledger.schema';
 import { Model } from 'mongoose';
-import { CreditRewardsDto } from './dtos/credit-rewards.dto';
+import { CreditRewardsDto } from './dto/credit-rewards.dto';
 import { UserReward, UserRewardDocument } from './schemas/user-reward.schema';
-import { DebitRewardDto } from './dtos/debit-reward.dto';
+import { DebitRewardDto } from './dto/debit-reward.dto';
 import { exec } from 'child_process';
 
 @Injectable()
@@ -159,6 +159,9 @@ export class UserRewardsService {
           limit: Number(limit),
         },
       )
+      .sort({
+        createdAt: 1,
+      })
       .exec();
     return ledger;
   }

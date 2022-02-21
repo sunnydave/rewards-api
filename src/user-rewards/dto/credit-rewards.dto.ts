@@ -1,5 +1,6 @@
-import { IsDate, IsNumber, IsObject, IsString } from 'class-validator';
+import {IsDate, IsNotEmpty, IsNumber, IsObject, IsString} from 'class-validator';
 import { ApplyRewardDto } from '../../reward-configuration/dto/apply-reward.dto';
+import {ApiProperty} from "@nestjs/swagger";
 
 export class CreditRewardsDto {
   @IsString()
