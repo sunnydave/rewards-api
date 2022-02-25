@@ -1,0 +1,346 @@
+{
+	"info": {
+		"_postman_id": "1648134f-cca2-46f2-ba71-f5260f9e5056",
+		"name": "Rewards",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Create Tenant",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"New Tenant\",\n    \"email\": \"test@test.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/tenant/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tenant",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Get Tenant",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-REWARDS-API-KEY",
+						"value": "d28b4576-683a-4b80-a57d-2e7842563fa0",
+						"type": "default"
+					},
+					{
+						"key": "X-REWARDS-API-SECRET",
+						"value": "rTE7Gi1mBuPXeRgNMgUpqONTOL2U5kOl0mh3est4",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/tenant/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tenant",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Add Reward Configuration",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-REWARDS-API-KEY",
+						"value": "d28b4576-683a-4b80-a57d-2e7842563fa0",
+						"type": "default"
+					},
+					{
+						"key": "X-REWARDS-API-SECRET",
+						"value": "rTE7Gi1mBuPXeRgNMgUpqONTOL2U5kOl0mh3est4",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"GET100\",\n    \"ruleExpiry\": \"28-Feb-2022\",\n    \"rewardExpiryType\": \"RelativeDateReward\",\n    \"rewardExpiryDays\": 30,\n    \"rewardPointMultiplicationMeasure\": \"\",\n    \"rewardPoints\": 100,\n    \"rules\": [\n        {\n            \"measure\": \"orderTotal\",\n            \"measureValue\": 1000,\n            \"measureComparator\": \"gt\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/reward-configuration",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"reward-configuration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Apply Reward",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-REWARDS-API-KEY",
+						"value": "d28b4576-683a-4b80-a57d-2e7842563fa0",
+						"type": "text"
+					},
+					{
+						"key": "X-REWARDS-API-SECRET",
+						"value": "rTE7Gi1mBuPXeRgNMgUpqONTOL2U5kOl0mh3est4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": \"testUser\",\n    \"transaction\": {\n        \"orderTotal\": 1100\n    },\n    \"userMeta\": {\n\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/reward-configuration/applyReward",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"reward-configuration",
+						"applyReward"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Create Reward Redemption Rule",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-REWARDS-API-KEY",
+						"value": "d28b4576-683a-4b80-a57d-2e7842563fa0",
+						"type": "text"
+					},
+					{
+						"key": "X-REWARDS-API-SECRET",
+						"value": "rTE7Gi1mBuPXeRgNMgUpqONTOL2U5kOl0mh3est4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\" : \"Zomato20\",\n    \"expiry\": \"2022-02-21\",\n    \"rules\":[\n        {\n            \"measure\": \"totalOrderValue\",\n            \"measureValue\": 500,\n            \"measureComparator\": \"gt\"\n        }\n    ],\n    \"discountType\": \"PercentDiscount\",\n    \"percentDiscount\" : 10,\n    \"measureForPercent\": \"totalOrderValue\",\n    \"maxDiscountValue\": 100,\n    \"requiredRewardPoints\": 100\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/reward-redemption/createConfiguration",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"reward-redemption",
+						"createConfiguration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. Get All Applicable Reward Redemption Rules",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-REWARDS-API-KEY",
+						"value": "d28b4576-683a-4b80-a57d-2e7842563fa0",
+						"type": "text"
+					},
+					{
+						"key": "X-REWARDS-API-SECRET",
+						"value": "rTE7Gi1mBuPXeRgNMgUpqONTOL2U5kOl0mh3est4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": \"testUser\",\n    \"transaction\": {\n        \"totalOrderValue\": 650\n    },\n    \"userMeta\": {\n        \n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/reward-redemption/allApplicableRules",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"reward-redemption",
+						"allApplicableRules"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. Apply Reward",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-REWARDS-API-KEY",
+						"value": "d28b4576-683a-4b80-a57d-2e7842563fa0",
+						"type": "text"
+					},
+					{
+						"key": "X-REWARDS-API-SECRET",
+						"value": "rTE7Gi1mBuPXeRgNMgUpqONTOL2U5kOl0mh3est4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": \"testUser\",\n    \"transaction\": {\n        \"totalOrderValue\": 650\n    },\n    \"userMeta\": {\n        \n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/reward-redemption/applyReward/621399f901c5dd48b23dc9c6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"reward-redemption",
+						"applyReward",
+						"621399f901c5dd48b23dc9c6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8. Get User Rewards",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-REWARDS-API-KEY",
+						"value": "d28b4576-683a-4b80-a57d-2e7842563fa0",
+						"type": "text"
+					},
+					{
+						"key": "X-REWARDS-API-SECRET",
+						"value": "rTE7Gi1mBuPXeRgNMgUpqONTOL2U5kOl0mh3est4",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/user-rewards/testUser/currentRewardValue",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user-rewards",
+						"testUser",
+						"currentRewardValue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9. Get User Reward Ledger",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-REWARDS-API-KEY",
+						"value": "d28b4576-683a-4b80-a57d-2e7842563fa0",
+						"type": "text"
+					},
+					{
+						"key": "X-REWARDS-API-SECRET",
+						"value": "rTE7Gi1mBuPXeRgNMgUpqONTOL2U5kOl0mh3est4",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/user-rewards/testUser/userLedger?page=0&limit=100",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user-rewards",
+						"testUser",
+						"userLedger"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
